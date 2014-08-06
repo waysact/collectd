@@ -18,7 +18,7 @@ collectd_global:
 collectd_plugins:
  - { plugin: "none" }
 
-collectd_server: "95.85.35.147"
+collectd_server: "CHANGEME"
 
 collectd_conf_rh: "/etc/collectd.conf"
 collectd_conf_deb: "/etc/collectd/collectd.conf"
