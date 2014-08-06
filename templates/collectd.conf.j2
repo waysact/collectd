@@ -1,0 +1,27 @@
+# {{ ansible_managed }}
+
+{% if collectd_global is defined %}
+{% for element in collectd_global %}
+{{ element.directive }}
+{% endfor %}
+{% endif %}
+
+{% if collectd_plugins is defined %}
+{% for element in collectd_plugins %}
+LoadPlugin {{ element.plugin }}
+{% endfor %}
+{% endif %}
+
+{% if collectd_plugins is defined %}
+{% for element in collectd_plugins %}
+{% if element.directive is defined %}
+
+<Plugin "{{ element.plugin }}">
+{{ element.directive }}
+</Plugin>
+
+{% endif %}
+{% endfor %}
+{% endif %}
+
+# {{ ansible_managed }}

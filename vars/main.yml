@@ -1,0 +1,24 @@
+---
+# vars file for collectd
+
+epel6_url: "http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm"
+epel7_url: "http://dl.fedoraproject.org/pub/epel/beta/7/x86_64/epel-release-7-0.2.noarch.rpm"
+
+collectd_packages:
+ - { package: "collectd" }
+
+collectd_global:
+ - { directive: "Hostname {{ ansible_fqdn }}" }
+ - { directive: "FQDNLookup false" }
+ - { directive: "Interval 10" }
+ - { directive: "Timeout 2" }
+ - { directive: "ReadThreads 5" }
+ - { directive: "AutoLoadPlugin false" }
+
+collectd_plugins:
+ - { plugin: "none" }
+
+collectd_server: "95.85.35.147"
+
+collectd_conf_rh: "/etc/collectd.conf"
+collectd_conf_deb: "/etc/collectd/collectd.conf"
