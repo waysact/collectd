@@ -1,6 +1,17 @@
 # {{ ansible_managed }}
 # In this section we define all the plugins which requires more than one directive
+
+{% if item.plugin == "network" and item.Forward == "true" %}
+# Network plugin in forward mode
+<Plugin "{{ item.plugin }}">
+Listen "{{ item.Listen }}"
+Server "{{ item.Server }}"
+Forward {{ item.Forward }}
+</Plugin>
+{% endif %}
+
 {% if item.plugin == "write_graphite" %}
+# Write to Graphite
 <Plugin "{{ item.plugin }}">
        <Carbon>
                Host "{{ item.Host }}"
@@ -14,4 +25,5 @@
        </Carbon>
 </Plugin>
 {% endif %}
+
 # {{ ansible_managed }}
