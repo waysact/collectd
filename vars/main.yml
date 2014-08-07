@@ -22,3 +22,6 @@ collectd_server: "CHANGEME"
 
 collectd_conf_rh: "/etc/collectd.conf"
 collectd_conf_deb: "/etc/collectd/collectd.conf"
+
+collectd_include_rh: "/etc/collectd.d"
+collectd_include_deb: "/etc/collectd"

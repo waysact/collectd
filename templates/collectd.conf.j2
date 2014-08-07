@@ -12,16 +12,24 @@ LoadPlugin {{ element.plugin }}
 {% endfor %}
 {% endif %}
 
+## In this section we define all the plugins which have only one directive
+
 {% if collectd_plugins is defined %}
 {% for element in collectd_plugins %}
 {% if element.directive is defined %}
-
 <Plugin "{{ element.plugin }}">
 {{ element.directive }}
 </Plugin>
 
 {% endif %}
 {% endfor %}
+{% endif %}
+
+{% if ansible_os_family == "RedHat" %}
+Include "{{ collectd_include_rh }}"
+{% endif %}
+{% if ansible_os_family == "Debian" %}
+Include "{{ collectd_include_deb }}/*.include.conf"
 {% endif %}
 
 # {{ ansible_managed }}
