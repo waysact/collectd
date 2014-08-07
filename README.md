@@ -3,6 +3,8 @@ Role Name
 
 Ansible role to install and configure CollectD
 
+See https://github.com/valentinogagliardi/collectd/wiki for detailed instructions.
+
 Requirements
 ------------
 
@@ -58,18 +60,28 @@ Example Playbook
                  collectd_plugins:
                  [{ plugin: "syslog", directive: 'Loglevel "info"' },
                   { plugin: "rrdtool", directive: 'DataDir "/var/lib/collectd/rrd"' },
-                  { plugin: "network", directive: 'Listen "{{ ansible_eth0.ipv4.address }}"' }],
+                  { plugin: "network", directive: 'Listen "{{ ansible_eth0.ipv4.address }}"' },
+                  { plugin: "write_graphite", type: "include",
+                    Host: "10.0.8.15",
+                    Port: "2003",
+                    Prefix: "collectd",
+                    Postfix: "collectd",
+                    StoreRates: "true",
+                    AlwaysAppendDS: "false",
+                    EscapeCharacter: "_" }],
+                 tags: ["collectd"] }
 
     - hosts: CollectdServerRH
       roles:
        - { role: collectd,
                  collectd_packages:
                  [{ package: "collectd" },
-                  { package: "collectd-rrd" }],
+                  { package: "collectd-rrdtool" }],
                  collectd_plugins:
                  [{ plugin: "syslog", directive: 'Loglevel "info"' },
                   { plugin: "rrdtool", directive: 'DataDir "/var/lib/collectd/"' },
                   { plugin: "network", directive: 'Listen "{{ ansible_eth0.ipv4.address }}"' }],
+                 tags: ["collectd"] }
 
     - hosts: CollectdClientOne
       roles:
@@ -82,11 +94,7 @@ Example Playbook
                   { plugin: "memory" },
                   { plugin: "interface", directive: 'Interface "eth0"' },
                   { plugin: "network", directive: 'Server "{{ collectd_server }}"'  }],
-
-Known Limitations
---------------
-
-At this moment you can specify only one directive per plugin inside the playbook. If you have plan to use plugins which takes more than one directive you can use a dedicated template.
+                 tags: ["collectd"] }
 
 License
 -------
