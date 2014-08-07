@@ -24,3 +24,16 @@
   notify: restart collectd
   tags:
    - configure
+
+- name: Copy Includes CollectD Configurations on RedHat OS family
+  template: src=collectd.include.conf.j2
+            dest={{ collectd_include_rh }}/{{ item.plugin }}.include.conf
+            backup=yes
+            owner=root
+            group=root
+            mode=0644
+  with_items: collectd_plugins
+  when: item.type is defined and item.type == "include"
+  notify: restart collectd
+  tags:
+   - configure

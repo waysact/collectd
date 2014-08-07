@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+# In this section we define all the plugins which requires more than one directive
+{% if item.plugin == "write_graphite" %}
+<Plugin "{{ item.plugin }}">
+       <Carbon>
+               Host "{{ item.Host }}"
+               Port "{{ item.Port }}"
+               Prefix "{{ item.Prefix }}"
+               Postfix "{{ item.Postfix }}"
+               SeparateInstances {{ item.SeparateInstances }}
+               StoreRates {{ item.StoreRates }}
+               AlwaysAppendDS {{ item.AlwaysAppendDS }}
+               EscapeCharacter "{{ item.EscapeCharacter }}"
+       </Carbon>
+</Plugin>
+{% endif %}
+# {{ ansible_managed }}

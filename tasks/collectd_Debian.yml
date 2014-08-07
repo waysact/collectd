@@ -5,13 +5,26 @@
        state=latest
   with_items: collectd_packages
 
-- name: Copy main CollectD Configuration on Debian OS family
+- name: Copy Main CollectD Configuration on Debian OS family
   template: src=collectd.conf.j2
             dest={{ collectd_conf_deb }}
             backup=yes
             owner=root
             group=root
             mode=0644
+  notify: restart collectd
+  tags:
+   - configure
+
+- name: Copy Includes CollectD Configurations on Debian OS family
+  template: src=collectd.include.conf.j2
+            dest={{ collectd_include_deb }}/{{ item.plugin }}.include.conf
+            backup=yes
+            owner=root
+            group=root
+            mode=0644
+  with_items: collectd_plugins
+  when: item.type is defined and item.type == "include"
   notify: restart collectd
   tags:
    - configure
