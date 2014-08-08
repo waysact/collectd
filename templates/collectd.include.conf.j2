@@ -1,6 +1,15 @@
 # {{ ansible_managed }}
 # In this section we define all the plugins which requires more than one directive
 
+{% if item.plugin == "apache" %}
+# Apache plugin
+<Plugin "{{ item.plugin }}">
+   <Instance "{{ item.Instance }}">
+       URL "{{ item.Url }}"
+   </Instance>
+</Plugin>
+{% endif %}
+
 {% if item.plugin == "network" and item.Forward == "true" %}
 # Network plugin in forward mode
 <Plugin "{{ item.plugin }}">

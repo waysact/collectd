@@ -26,7 +26,7 @@ LoadPlugin {{ element.plugin }}
 {% endif %}
 
 {% if ansible_os_family == "RedHat" %}
-Include "{{ collectd_include_rh }}"
+Include "{{ collectd_include_rh }}/*.include.conf"
 {% endif %}
 {% if ansible_os_family == "Debian" %}
 Include "{{ collectd_include_deb }}/*.include.conf"
