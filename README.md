@@ -5,10 +5,10 @@ Ansible role to install and configure CollectD
 
 See https://github.com/valentinogagliardi/collectd/wiki for detailed instructions.
 
-Requirements
+Suggested Companions Roles
 ------------
 
-none
+Ansible role to install Facette: https://galaxy.ansible.com/list#/roles/1298
 
 Role Variables
 --------------
@@ -45,11 +45,6 @@ collectd_conf_deb: "/etc/collectd/collectd.conf"
 collectd_include_rh: "/etc/collectd.d"
 collectd_include_deb: "/etc/collectd"
 ```
-
-Companions Roles
-------------
-
-Ansible role to install Facette: `valentinogagliardi.facette`
 
 Example Playbook
 -------------------------
