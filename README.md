@@ -41,19 +41,22 @@ collectd_server: "CHANGEME"
 # Configuration files for CollectD
 collectd_conf_rh: "/etc/collectd.conf"
 collectd_conf_deb: "/etc/collectd/collectd.conf"
+
+collectd_include_rh: "/etc/collectd.d"
+collectd_include_deb: "/etc/collectd"
 ```
 
-Dependencies
+Companions Roles
 ------------
 
-none
+Ansible role to install Facette: `valentinogagliardi.facette`
 
 Example Playbook
 -------------------------
 
     - hosts: CollectdServerDebian
       roles:
-       - { role: collectd,
+       - { role: valentinogagliardi.collectd,
                  collectd_packages:
                  [{ package: "collectd" },
                   { package: "collectd-utils" }],
@@ -73,7 +76,7 @@ Example Playbook
 
     - hosts: CollectdServerRH
       roles:
-       - { role: collectd,
+       - { role: valentinogagliardi.collectd,
                  collectd_packages:
                  [{ package: "collectd" },
                   { package: "collectd-rrdtool" }],
@@ -85,7 +88,7 @@ Example Playbook
 
     - hosts: CollectdClientOne
       roles:
-       - { role: collectd,
+       - { role: valentinogagliardi.collectd,
                  collectd_plugins:
                  [{ plugin: "syslog", directive: 'Loglevel "info"' },
                   { plugin: "cpu" },
