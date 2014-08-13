@@ -14,10 +14,6 @@ Role Variables
 --------------
 
 ```yaml
-# Epel repos for RH
-epel6_url: "http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm"
-epel7_url: "http://dl.fedoraproject.org/pub/epel/beta/7/x86_64/epel-release-7-0.2.noarch.rpm"
-
 # Basic collectD package
 collectd_packages:
  - { package: "collectd" }
