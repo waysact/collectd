@@ -46,6 +46,7 @@ Role Variables
 ```yaml
 collectd_packages_RedHat:
  - { package: "collectd" }
+ - { package: "collectd-apache" }
 
 collectd_packages_Debian:
  - { package: "collectd" }
