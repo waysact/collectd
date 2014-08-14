@@ -1,8 +1,12 @@
 ---
 # vars file for collectd
 
-collectd_packages:
+collectd_packages_RedHat:
  - { package: "collectd" }
+
+collectd_packages_Debian:
+ - { package: "collectd" }
+ - { package: "collectd-utils" }
 
 collectd_global:
  - { directive: "Hostname {{ ansible_fqdn }}" }
@@ -12,10 +16,8 @@ collectd_global:
  - { directive: "ReadThreads 5" }
  - { directive: "AutoLoadPlugin false" }
 
-collectd_plugins:
- - { plugin: "none" }
-
-collectd_server: "CHANGEME"
+collectd_plugins: "none"
+collectd_plugins_multi: "none"
 
 collectd_conf_rh: "/etc/collectd.conf"
 collectd_conf_deb: "/etc/collectd/collectd.conf"

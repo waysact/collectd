@@ -28,14 +28,14 @@ galaxy_info:
   #  versions:
   #  - all
   #  - any
-  #- name: Fedora
-  #  versions:
+  - name: Fedora
+    versions:
   #  - all
   #  - 16
   #  - 17
   #  - 18
-  #  - 19
-  #  - 20
+    - 19
+    - 20
   #- name: opensuse
   #  versions:
   #  - all
@@ -95,7 +95,7 @@ galaxy_info:
   #  - all
   #  - etch
   #  - lenny
-  #  - squeeze
+    - squeeze
     - wheezy
   #
   # Below are all categories currently available. Just as with
