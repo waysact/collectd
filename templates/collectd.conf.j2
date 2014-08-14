@@ -6,30 +6,39 @@
 {% endfor %}
 {% endif %}
 
+## Always load syslog plugin so we can investigate issues
+LoadPlugin syslog
+
+<Plugin "syslog">
+  LogLevel "info"
+</Plugin>
+
 {% if collectd_plugins is defined %}
+## In this section we define all the plugins which have no directives
 {% for element in collectd_plugins %}
+{% if element.plugin is defined %}
 LoadPlugin {{ element.plugin }}
+{% endif %}
 {% endfor %}
 {% endif %}
 
-## In this section we define all the plugins which have only one directive
+{% if collectd_plugins_multi is defined %}
+## In this section we define all the plugins which takes multiple directives
+{% for key,value in collectd_plugins_multi.iteritems() %}
+LoadPlugin {{ key }}
 
-{% if collectd_plugins is defined %}
-{% for element in collectd_plugins %}
-{% if element.directive is defined %}
-<Plugin "{{ element.plugin }}">
-{{ element.directive }}
+<Plugin "{{ key }}">
+{% for key,value in value.items() %}
+  {{ key }} {{ value }}
+{% endfor %}
 </Plugin>
 
-{% endif %}
 {% endfor %}
 {% endif %}
 
 {% if ansible_os_family == "RedHat" %}
-Include "{{ collectd_include_rh }}/*.include.conf"
+#Include "{{ collectd_include_rh }}/*.include.conf"
 {% endif %}
 {% if ansible_os_family == "Debian" %}
-Include "{{ collectd_include_deb }}/*.include.conf"
+#Include "{{ collectd_include_deb }}/*.include.conf"
 {% endif %}
-
-# {{ ansible_managed }}
