@@ -37,6 +37,7 @@ Example Playbooks
              collectd_plugins_multi:
              { interface: { Interface: '"eth0"' },
                disk: { Disk: '"sda"' },
+               apache: { URL: '"http://{{ ansible_lo.ipv4.address }}/server-status?auto"' },
                network: { Server: '"CHANGEME"' }},
               tags: ["collectd"] }
 ```
