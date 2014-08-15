@@ -27,7 +27,7 @@ Example Playbooks
 
              tags: ["collectd"] }
 
-- hosts: ClientOne:ClientTwo
+- hosts: ApacheWebServers
   roles:
    - { role: valentinogagliardi.collectd,
              collectd_plugins:
@@ -38,6 +38,24 @@ Example Playbooks
              { interface: { Interface: '"eth0"' },
                disk: { Disk: '"sda"' },
                apache: { URL: '"http://{{ ansible_lo.ipv4.address }}/server-status?auto"' },
+               network: { Server: '"CHANGEME"' }},
+              tags: ["collectd"] }
+
+- hosts: NginxWebServers
+  roles:
+   - { role: valentinogagliardi.collectd,
+             collectd_packages_RedHat:
+             [{ package: "collectd" },
+              { package: "collectd-nginx" }],
+
+             collectd_plugins:
+             [{ plugin: "load" },
+              { plugin: "memory" }],
+
+             collectd_plugins_multi:
+             { interface: { Interface: '"eth0"' },
+               disk: { Disk: '"sda"' },
+               nginx: { URL: '"http://{{ ansible_lo.ipv4.address }}/nginx_status"' },
                network: { Server: '"CHANGEME"' }},
               tags: ["collectd"] }
 ```
