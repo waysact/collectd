@@ -4,6 +4,7 @@
 collectd_packages_RedHat:
  - { package: "collectd" }
  - { package: "collectd-apache" }
+ - { package: "collectd-mysql" }
 
 collectd_packages_Debian:
  - { package: "collectd" }
