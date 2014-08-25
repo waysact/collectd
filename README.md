@@ -13,7 +13,7 @@ Ansible role to install Facette: https://galaxy.ansible.com/list#/roles/1298
 Example Playbooks
 -------------------------
 
-```yaml
+```
 - hosts: CollectdServerDebian
   roles:
    - { role: valentinogagliardi.collectd,
