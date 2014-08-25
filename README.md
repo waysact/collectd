@@ -23,8 +23,10 @@ Example Playbooks
 
              collectd_plugins_multi:
              { rrdtool: { Datadir: '"/var/lib/collectd/rrd"' },
-               network: { Listen: '"{{ ansible_eth0.ipv4.address }}"'}},
-
+               network: { 1: '<Listen "{{ ansible_eth0.ipv4.address }}">',
+                          2: 'SecurityLevel "Encrypt"',
+                          3: 'AuthFile "/etc/collectd/auth_file"',
+                          4: '</Server>' }},
              tags: ["collectd"] }
 
 - hosts: ApacheWebServers
@@ -32,13 +34,19 @@ Example Playbooks
    - { role: valentinogagliardi.collectd,
              collectd_plugins:
              [{ plugin: "load" },
+              { plugin: "vmem" },
               { plugin: "memory" }],
 
              collectd_plugins_multi:
              { interface: { Interface: '"eth0"' },
+               tcpconns: { LocalPort: '"80"' },
                disk: { Disk: '"sda"' },
                apache: { URL: '"http://{{ ansible_lo.ipv4.address }}/server-status?auto"' },
-               network: { Server: '"CHANGEME"' }},
+               network: { 1: '<Server "1.2.3.4">',
+                          2: 'SecurityLevel "Encrypt"',
+                          3: 'Username "CHANGEME"',
+                          4: 'Password "1rht44tg2i"',
+                          5: '</Server>' }},
               tags: ["collectd"] }
 
 - hosts: NginxWebServers
@@ -50,13 +58,18 @@ Example Playbooks
 
              collectd_plugins:
              [{ plugin: "load" },
+              { plugin: "vmem" },
               { plugin: "memory" }],
 
              collectd_plugins_multi:
              { interface: { Interface: '"eth0"' },
                disk: { Disk: '"sda"' },
                nginx: { URL: '"http://{{ ansible_lo.ipv4.address }}/nginx_status"' },
-               network: { Server: '"CHANGEME"' }},
+               network: { 1: '<Server "1.2.3.4">',
+                          2: 'SecurityLevel "Encrypt"',
+                          3: 'Username "CHANGEME"',
+                          4: 'Password "1rht44tg2i"',
+                          5: '</Server>' }},
               tags: ["collectd"] }
 ```
 Role Variables
@@ -66,6 +79,7 @@ Role Variables
 collectd_packages_RedHat:
  - { package: "collectd" }
  - { package: "collectd-apache" }
+ - { package: "collectd-mysql" }
 
 collectd_packages_Debian:
  - { package: "collectd" }
