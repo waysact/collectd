@@ -1,8 +1,7 @@
 ---
 - name: Install CollectD on Debian OS Family
   apt: pkg={{ item.package }}
-       update_cache=yes
-       state=latest
+       state=present
   with_items: collectd_packages_{{ ansible_os_family }}
   tags:
    - collectd_install
