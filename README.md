@@ -16,61 +16,69 @@ Example Playbooks
 ```yaml
 - hosts: CollectdServerDebian
   roles:
-   - { role: valentinogagliardi.collectd,
-             collectd_plugins:
-             [{ plugin: "load" },
-              { plugin: "memory" }],
-
-             collectd_plugins_multi:
-             { rrdtool: { Datadir: '"/var/lib/collectd/rrd"' },
-               network: { 1: '<Listen "{{ ansible_eth0.ipv4.address }}">',
-                          2: 'SecurityLevel "Encrypt"',
-                          3: 'AuthFile "/etc/collectd/auth_file"',
-                          4: '</Server>' }},
-             tags: ["collectd"] }
+    - role: valentinogagliardi.collectd
+      collectd_plugins:
+        - plugin: load
+        - plugin: memory
+      collectd_plugins_multi:
+        rrdtool: >-
+          Datadir "/var/lib/collectd/rrd"
+        network: >-
+          <Server "{{ ansible_eth0.ipv4.address }}">
+            SecurityLevel "Encrypt"
+            AuthFile "/etc/collectd/auth_file"
+          </Server>
+      tags: collectd
 
 - hosts: ApacheWebServers
   roles:
-   - { role: valentinogagliardi.collectd,
-             collectd_plugins:
-             [{ plugin: "load" },
-              { plugin: "vmem" },
-              { plugin: "memory" }],
+    - role: valentinogagliardi.collectd
+      collectd_plugins:
+        - plugin: load
+        - plugin: vmem
+        - plugin: memory
 
-             collectd_plugins_multi:
-             { interface: { Interface: '"eth0"' },
-               tcpconns: { LocalPort: '"80"' },
-               disk: { Disk: '"sda"' },
-               apache: { URL: '"http://{{ ansible_lo.ipv4.address }}/server-status?auto"' },
-               network: { 1: '<Server "1.2.3.4">',
-                          2: 'SecurityLevel "Encrypt"',
-                          3: 'Username "CHANGEME"',
-                          4: 'Password "1rht44tg2i"',
-                          5: '</Server>' }},
-              tags: ["collectd"] }
+      collectd_plugins_multi:
+        interface: >-
+          Interface "eth0"
+        tcpconns: >-
+          LocalPort "80"
+        disk: >-
+          Disk "sda"
+        apache: >-
+          URL "http://{{ ansible_lo.ipv4.address }}/server-status?auto"
+        network: >-
+          <Server "1.2.3.4">
+            SecurityLevel "Encrypt"
+            Username "CHANGEME"
+            Password "1rht44tg2i"
+          </Server>
+      tags: collectd
 
 - hosts: NginxWebServers
   roles:
-   - { role: valentinogagliardi.collectd,
-             collectd_packages_RedHat:
-             [{ package: "collectd" },
-              { package: "collectd-nginx" }],
-
-             collectd_plugins:
-             [{ plugin: "load" },
-              { plugin: "vmem" },
-              { plugin: "memory" }],
-
-             collectd_plugins_multi:
-             { interface: { Interface: '"eth0"' },
-               disk: { Disk: '"sda"' },
-               nginx: { URL: '"http://{{ ansible_lo.ipv4.address }}/nginx_status"' },
-               network: { 1: '<Server "1.2.3.4">',
-                          2: 'SecurityLevel "Encrypt"',
-                          3: 'Username "CHANGEME"',
-                          4: 'Password "1rht44tg2i"',
-                          5: '</Server>' }},
-              tags: ["collectd"] }
+    - role: valentinogagliardi.collectd
+      collectd_packages_RedHat:
+        - package: collectd
+        - package: collectd-nginx
+      collectd_plugins:
+        - plugin: load
+        - plugin: vmem
+        - plugin: memory
+      collectd_plugins_multi:
+        interface: >-
+          Interface: "eth0"
+        disk: >-
+          Disk: "sda"
+        nginx: >-
+          URL: "http://{{ ansible_lo.ipv4.address }}/nginx_status"
+        network: >-
+          <Server "1.2.3.4">
+            SecurityLevel "Encrypt"
+            Username "CHANGEME"
+            Password "1rht44tg2i"
+          </Server>
+      tags: collectd
 ```
 Role Variables
 --------------

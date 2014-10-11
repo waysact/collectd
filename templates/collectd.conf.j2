@@ -28,14 +28,7 @@ LoadPlugin {{ element.plugin }}
 LoadPlugin {{ key }}
 
 <Plugin "{{ key }}">
-{% for key,value in value.items()|sort %}
-{% if key is number %}
-{# If key is a number, print only the value. This is a workaround to deal with <Instance ""> blocks. Better than nothing #}
-  {{ value }}
-{% else %}
-  {{ key }} {{ value }}
-{% endif %}
-{% endfor %}
+{{ value }}
 </Plugin>
 
 {% endfor %}
